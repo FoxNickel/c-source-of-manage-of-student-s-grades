@@ -165,6 +165,7 @@ void Process(int student,int subjects,char subname[8][10])//处理函数
         for(i=0; i<subjects; i++)
             for(j=0; j<5; j++)
                 qualify[i][j]=0;//每次统计前清零
+
         if(choice==1)//总分排序
         {
             printf("按总分排序结果为:\n");
@@ -236,62 +237,69 @@ void Process(int student,int subjects,char subname[8][10])//处理函数
             printf("请输入要修改的学生的学号:");
             scanf("%d",&edit_number);
             for(i=0; i<student_AfterMinus; i++)
-                {
-                    if(edit_number==stu[i].stu_number)
-                    {
-                        printf("该名同学的成绩信息如下:\n");
-                        printf("姓名\t学号\t性别\t");
-                        for(j=0; j<subjects; j++)
-                        {
-                            printf("%s\t",subname[i]);
-                        }
-                        printf("总分\t平均分");
-                        printf("\n");
-                        printf("%s\t%d\t%s\t",stu[i].name,stu[i].stu_number,stu[i].sex);
-                        for(k=0; k<subjects; k++)
-                        {
-                            printf("%d\t",stu[i].score[k]);
-                        }
-                        printf("%5.2f\t%5.2f",stu[i].sum,stu[i].average);
-                        printf("\n");
-                    }
-                }
-            printf("您确定要修改该学生的成绩？(修改请输入1，删除请输入2，否请输入其他数字):");
-            scanf("%d",&change);
-            if(change==1)
             {
-                for(i=0; i<student_AfterMinus; i++)
+                if(edit_number==stu[i].stu_number)
                 {
-                    if(edit_number==stu[i].stu_number)
+                    printf("该名同学的成绩信息如下:\n");
+                    printf("姓名\t学号\t性别\t");
+                    for(j=0; j<subjects; j++)
                     {
-                        stu[i].sum=0;
-                        for(j=0; j<subjects; j++)
+                        printf("%s\t",subname[i]);
+                    }
+                    printf("总分\t平均分");
+                    printf("\n");
+                    printf("%s\t%d\t%s\t",stu[i].name,stu[i].stu_number,stu[i].sex);
+                    for(k=0; k<subjects; k++)
+                    {
+                        printf("%d\t",stu[i].score[k]);
+                    }
+                    printf("%5.2f\t%5.2f",stu[i].sum,stu[i].average);
+                    printf("\n");
+                    printf("您确定要修改该学生的成绩？(修改请输入1，删除请输入2，否请输入其他数字):");
+                    scanf("%d",&change);
+                    if(change==1)
+                    {
+                        for(i=0; i<student_AfterMinus; i++)
                         {
-                            printf("请输入第%s同学的%s成绩：",stu[i].name,subname[j]);
-                            scanf("%d",&stu[i].score[j]);
-                            stu[i].sum += stu[i].score[j];
+                            if(edit_number==stu[i].stu_number)
+                            {
+                                stu[i].sum=0;
+                                for(j=0; j<subjects; j++)
+                                {
+                                    printf("请输入第%s同学的%s成绩：",stu[i].name,subname[j]);
+                                    scanf("%d",&stu[i].score[j]);
+                                    stu[i].sum += stu[i].score[j];
+                                }
+                                stu[i].average = stu[i].sum/subjects;
+                            }
                         }
-                        stu[i].average = stu[i].sum/subjects;
                     }
-                }
-            }
-            else if(change==2)
-            {
-                flag++;
-                for(i=0;i<student_AfterMinus;i++)
-                {
-                    if(edit_number==stu[i].stu_number)
+                    else if(change==2)
                     {
-                        for(j=0;j<20;j++)
-                            stu[i].name[j] = 'z';
-                        stu[i].stu_number = 999999;
-                        stu[i].sum = -1;
-                        sort1(p,student);
+                        flag++;
+                        for(i=0; i<student_AfterMinus; i++)
+                        {
+                            if(edit_number==stu[i].stu_number)
+                            {
+                                for(j=0; j<20; j++)
+                                    stu[i].name[j] = 'z';
+                                stu[i].stu_number = 999999;
+                                stu[i].sum = -1;
+                                sort1(p,student);
+                            }
+                        }
                     }
+                    else
+                        continue;
                 }
+                else
+                {
+                    printf("学生不存在！\n");
+                    break;
+                }
+
             }
-            else
-                continue;
+
         }
         else if(choice==5)//查询
         {
@@ -445,7 +453,7 @@ void Process(int student,int subjects,char subname[8][10])//处理函数
 /******************************处理函数结束**************************************/
 
 /******************************数据输入函数**************************************/
-void Input ()//数据读入
+void Input ()//数据输入
 {
     int i,j;//循环控制变量
     int student;//保存各班学生总人数
