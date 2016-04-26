@@ -292,12 +292,6 @@ void Process(int student,int subjects,char subname[8][10])//处理函数
                     else
                         continue;
                 }
-                else
-                {
-                    printf("学生不存在！\n");
-                    break;
-                }
-
             }
 
         }
